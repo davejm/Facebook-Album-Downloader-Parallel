@@ -1,7 +1,7 @@
 Facebook-Album-Downloader-Parallel
 ==================================
 
-Downloads pictures from Facebook albums of a specific user. Uses multiprocessing to download pictures in parallel.
+Downloads pictures from Facebook albums of a specific user. Uses multiprocessing to download pictures in parallel which makes it very fast.
 Downloading the pictures in parallel seemed to produce a speed increase of around a factor of 10 from the original non-parallel implementation.
 
 ##Usage:
