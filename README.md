@@ -1,6 +1,10 @@
 Facebook-Album-Downloader-Parallel
 ==================================
 
+## Note:
+
+This will probably no longer work if you are downloading album's you do not own due to Facebook's API upgrade and new policies concerning the access and usage of other users' data through the API.
+
 Downloads pictures from Facebook albums of a specific user. Uses multiprocessing to download pictures in parallel which makes it very fast.
 Downloading the pictures in parallel seemed to produce a speed increase of around a factor of 10 from the original non-parallel implementation.
 
