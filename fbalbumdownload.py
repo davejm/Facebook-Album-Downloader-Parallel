@@ -73,6 +73,21 @@ def inputUserID(GRAPH, GUI):
     userselect = parseUser(userselect)
     return userselect
 
+def paginate(GRAPH, request_output):
+    done = False
+    running_output = request_output
+    while(not done):
+        for output in running_output['data']:
+            yield output
+        if "paging" in running_output and "next" in running_output['paging']:
+            next_url = running_output['paging']['next']
+            if next_url.startswith("https://graph.facebook.com/"):
+                next_url = next_url[len("https://graph.facebook.com/"):]
+            else:
+                raise ValueError("Next URL did not start with graph.facebook.com")
+            running_output = GRAPH.request(next_url)
+        else:
+            done = True
 
 if __name__ == '__main__':   
     
@@ -141,10 +156,9 @@ if __name__ == '__main__':
             
             pool = multiprocessing.Pool()
             source_urls = []
-            albumpics = GRAPH.get_connections(albumid, "photos", \
-                    fields="source", limit=5000)['data']
-            
-            
+            albumpics = list(paginate(GRAPH, GRAPH.get_connections(albumid, "photos", \
+                    fields="source", limit=5000)))
+           
             for pic in albumpics:
                 source_urls.append((pic['source'], albumname, USER.name, USER.uid, DUMPLOCATION))
             #pprint(source_urls) # DEBUG
