@@ -76,13 +76,14 @@ def inputUserID(GRAPH, GUI):
 def paginate(GRAPH, request_output):
     done = False
     running_output = request_output
+    api_url = "https://graph.facebook.com/"
     while(not done):
         for output in running_output['data']:
             yield output
         if "paging" in running_output and "next" in running_output['paging']:
             next_url = running_output['paging']['next']
-            if next_url.startswith("https://graph.facebook.com/"):
-                next_url = next_url[len("https://graph.facebook.com/"):]
+            if next_url.startswith(api_url):
+                next_url = next_url[len(api_url):]
             else:
                 raise ValueError("Next URL did not start with graph.facebook.com")
             running_output = GRAPH.request(next_url)
